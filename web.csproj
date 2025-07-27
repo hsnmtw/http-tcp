@@ -1,0 +1,51 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <AssemblyName>ui</AssemblyName>  
+    <OutputPath>.\</OutputPath>
+    <TargetFrameworks>net40</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+    <Runtime>x64</Runtime>    
+    <LangVersion>5</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>  
+    <Compile Include=".\Program.cs" />  
+    <Compile Include=".\Server\Server.cs" />  
+    <Compile Include=".\Server\Middleware.cs" />  
+    <Compile Include=".\Server\Request.cs" />  
+    <Compile Include=".\Server\Response.cs" />  
+  </ItemGroup>  
+
+  <Target Name="Build">
+    <MakeDir Directories="$(OutputPath)"      Condition="!Exists('$(OutputPath)')" />
+    <Csc Sources="@(Compile)" OutputAssembly="$(OutputPath)$(AssemblyName).exe" />  
+  </Target>
+
+</Project>
+
+<!-- <Project Sdk="Microsoft.NET.Sdk">
+
+ <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <Runtime>x64</Runtime>
+    <UseWindowsForms>false</UseWindowsForms>
+     <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+</Project> -->

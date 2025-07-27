@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="/assets/css/main.css">
+    </head>
+    <body>
+        <h1>Modular Web Server using C# .net Framework 4.0</h1>
+        <p>
+            This web server is not very special, but comes with the following concepts:
+        </p>
+        <ol>
+            <li>Every page request should be independant of others, therefore, we don't use shared 
+                application memory.
+            </li>
+            <li>The server is a Host, not container. This means that the server hosts some files,
+                may execute some binaries and get the output and push it as is to the client.
+            </li>
+            <li>
+                Defined responsibility: the server responsibility lies with serving files/web pages only.
+                Processing of data, fetching data, calculating results, generating reports is a service that
+                is delivered via binaries which the server help in executing.
+            </li>
+            <li>
+                The aim is to have a modular web app concept, something like the linux operating system
+                where you can use an executable that generates some result that can be piped to another 
+                executable and so forth. For example:
+                <pre>
+                    $> ls - ltr | grep something | wc -l
+                </pre>
+                <p>ls -ltr : lists some files in current directory</p>
+                <p>grep : finds only lines with match string</p>
+                <p>wc -l : word count by line</p>
+                <i>which tells you how many files exists in the current directory that contains string 'something'</i>
+            </li>
+            <li>
+                Currently, binaries can be executed individually, however, I am still working on an easy way to
+                make the server route some actions to collection of binaries with some defined order
+            </li>
+        </ol>
+    </body>
+</html>

@@ -1,0 +1,30 @@
+*,*::after,*::before { box-sizing: border-box; }
+:root {
+    --main-bg: rgb(207, 207, 207);
+    --nav-bg: whitesmoke;
+    --logo-bg: white;
+}
+
+logo { background-color: var(--logo-bg); width: 100%; min-height: 55px; align-items: center; justify-content: center; }
+
+body,html {
+    min-height: 100vh;
+    margin: 0;
+    padding: 1em;
+    background-color: var(--main-bg);
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(var(--columns),auto);
+}
+.w-fit { max-width: fit-content; }
+.gap1 { gap: 1em; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.grow { flex-grow: 1; }
+.w-20 { width: 20vw; }
+.end { justify-content: end; display: flex; padding-inline: 1em; }
+nav { background-color: var(--nav-bg); min-width: 18vw; display: flex; flex-direction: column; gap: 0.4em; }
+main { position: relative; display: grid; overflow-y: scroll; outline: 1px solid salmon; width: 100%; max-height: 100vh; }
+contents { background-color: var(--main-bg); padding-inline: 1em; }
+
