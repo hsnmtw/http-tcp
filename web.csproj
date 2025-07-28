@@ -20,7 +20,23 @@
 
   <Target Name="Build">
     <MakeDir Directories="$(OutputPath)"      Condition="!Exists('$(OutputPath)')" />
-    <Csc Sources="@(Compile)" OutputAssembly="$(OutputPath)$(AssemblyName).exe" />  
+    <Csc 
+      AllowUnsafeBlocks="false"
+      DebugType="none"
+      EmitDebugInformation="false"
+      LangVersion="5"
+      MainEntryPoint="web.Program"
+      NoLogo="true"
+      NoWin32Manifest="true"
+      Optimize="true"
+      Platform="x64"
+      PreferredUILang="en-US"
+      TargetType="exe"
+      TreatWarningsAsErrors="true"
+      Utf8Output="true"
+      WarningLevel="4"
+      Sources="@(Compile)" 
+      OutputAssembly="$(OutputPath)$(AssemblyName).exe" />  
   </Target>
 
 </Project>

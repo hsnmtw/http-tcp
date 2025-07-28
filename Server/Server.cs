@@ -89,11 +89,13 @@ namespace web.Http
 
         private bool AuthorizationHandled(HttpRequest request, HttpResponse response)
         {
-            if(0>1 && string.IsNullOrEmpty(request.SessionId))
-            {
-                request.Path = "/assets/html/user/login.html";
-                return IsStaticFile(request,response);
-            }
+            //TODO: disable authentication
+                // if(string.IsNullOrEmpty(request.SessionId))
+                // {
+                //     request.Path = "/assets/html/user/login.html";
+                //     return IsStaticFile(request,response);
+                // }
+
             return false;
         }
 
@@ -106,7 +108,7 @@ namespace web.Http
         }
 
         private const string CSC = @"c:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe";
-        private const string WORKING_DIRECTORY = "d:\\eservices\\ui2\\assets";
+        private static readonly string WORKING_DIRECTORY = Path.Combine(Directory.GetCurrentDirectory(), "assets");
 
         private static string Execute(string executable, string arguments=""){
             var process = Process.Start(new ProcessStartInfo { 
@@ -129,6 +131,32 @@ namespace web.Http
             return result;
         }
 
+        private void Compile(string file, string binary)
+        {
+            string args = string.Join(" ", new[] {
+                CSC, 
+                "/debug-", 
+                "/fullpaths", 
+                "/langversion:5", 
+                "/noconfig", 
+                "/nologo", 
+                "/nowin32manifest",
+                "/optimize+", 
+                "/platform:x64", 
+                "/preferreduilang:en-US",
+                "/target:exe", 
+                "/unsafe-",
+                "/warn:4",
+                "/warnaserror+",
+                "/out:" + binary, 
+                file 
+            });
+
+            string bindir = Path.GetDirectoryName(binary);
+            if (!Directory.Exists(bindir)) Directory.CreateDirectory(bindir);
+            Execute(@"c:\windows\system32\cmd.exe", "/c " + '"' + args + '"');
+        }
+
         private void AddCompiledScriptsRoutes(bool build, string folder)
         {
             LogInfo(string.Format("Exploring folder: {0}", folder));
@@ -143,12 +171,8 @@ namespace web.Http
 
                     if (build)
                     {
-                        string args = string.Join(" ", new[] {CSC, "/target:exe", "/platform:x64", "/nologo", "/noconfig", "/fullpaths", "/langversion:5", "/optimize+", "/debug-", "/out:" + binary, file });
                         LogInfo(string.Format("[{2}] CSC: {0} => {1}", file, binary, route));
-                        // Console.WriteLine("\n{0}\n", args);
-                        string bindir = Path.GetDirectoryName(binary);
-                        if (!Directory.Exists(bindir)) Directory.CreateDirectory(bindir);
-                        Execute(@"c:\windows\system32\cmd.exe", "/c " + '"' + args + '"');
+                        Compile(file, binary);
                     }
                     Handlers["GET:" + route] = (req, res) => {
                         LogInfo(string.Format("invoking: {0}", binary));
